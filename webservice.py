@@ -13,7 +13,7 @@ def hello():
 def tarefa():
     if request.method == 'GET':
         return json.dumps(tarefas.dic_tarefas, default=lambda x : x.__dict__)
-    
+    print(request)
     dic = json.loads(request.data)
     tarefas.cont+=1
     tarefa = tarefas.Tarefas(dic["atri1"], dic["atri2"])
