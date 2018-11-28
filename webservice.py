@@ -18,7 +18,7 @@ def tarefa():
     tarefas.cont+=1
     tarefa = tarefas.Tarefas(dic["atri1"], dic["atri2"])
     tarefas.dic_tarefas[tarefas.cont] = tarefa
-    return "200"
+    return "", 200
 
 
 @app.route('/Tarefas/<int:id_tarefa>', methods=['GET', 'PUT', 'DELETE'])
@@ -31,11 +31,11 @@ def tarefaId(id_tarefa):
             dic = json.loads(request.data)
             tarefa = tarefas.Tarefas(dic["atri1"], dic["atri2"])
             tarefas.dic_tarefas[id_tarefa] = tarefa
-            return "200"
+            return "", 200
 
         else:
             del tarefas.dic_tarefas[id_tarefa]
-            return "200"
+            return "", 200
     except:
         print("não existe id")
         return "Não exite id"
@@ -43,7 +43,7 @@ def tarefaId(id_tarefa):
 
 @app.route('/healthcheck')
 def codigo200():
-    return "200"
+    return "", 200
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
