@@ -12,7 +12,7 @@ try:
 
     if arg[0] == "adicionar":
         payload = {'atri1': arg[1], 'atri2': arg[2]}
-        r = requests.post(os.environ["ENDE"] + "/Tarefas", data=json.dumps(payload))
+        r = requests.post(os.environ["ENDE"] + "/Tarefas", json=payload)
 
     elif arg[0] == "listar":
         r = requests.get(os.environ["ENDE"] + "/Tarefas")
@@ -29,7 +29,8 @@ try:
 
     elif arg[0] == "atualizar":
         id_tarefa = arg[1]
-        r = requests.put(os.environ["ENDE"] + "Tarefas/" + id_tarefa, data = {'atri1': arg[2], 'atri2': arg[3]})
+        payload = {'atri1': arg[2], 'atri2': arg[3]}
+        r = requests.put(os.environ["ENDE"] + "Tarefas/" + id_tarefa, json=payload)
 
     else:
         print('comando inválido!')
