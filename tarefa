@@ -5,43 +5,34 @@ import os
 import requests
 import json
 
-try:
-    programa = sys.argv[0]
-    arg = sys.argv[1:]
+
+programa = sys.argv[0]
+arg = sys.argv[1:]
 
 
-    if arg[0] == "adicionar":
-        payload = {'atri1': arg[1], 'atri2': arg[2]}
-        r = requests.post(os.environ["ENDE"] + "/Tarefas", data=json.dumps(payload))
+if arg[0] == "adicionar":
+    payload = {'atri1': arg[1], 'atri2': arg[2]}
+    r = requests.post(os.environ["ENDE"] + "/Tarefas", data=json.dumps(payload))
 
-    elif arg[0] == "listar":
-        r = requests.get(os.environ["ENDE"] + "/Tarefas")
-        print(r.json())
+elif arg[0] == "listar":
+    r = requests.get(os.environ["ENDE"] + "/Tarefas")
+    print(r.json())
 
-    elif arg[0] == "buscar":
-        id_tarefa = arg[1]
-        r = requests.get(os.environ["ENDE"] + "/Tarefas/" + id_tarefa)
-        print(r.json())
+elif arg[0] == "buscar":
+    id_tarefa = arg[1]
+    r = requests.get(os.environ["ENDE"] + "/Tarefas/" + id_tarefa)
+    print(r.json())
 
-    elif arg[0] == "apagar":
-        id_tarefa = arg[1]
-        r = requests.delete(os.environ["ENDE"] + "/Tarefas/" + id_tarefa)
+elif arg[0] == "apagar":
+    id_tarefa = arg[1]
+    r = requests.delete(os.environ["ENDE"] + "/Tarefas/" + id_tarefa)
 
-    elif arg[0] == "atualizar":
-        id_tarefa = arg[1]
-        r = requests.put(os.environ["ENDE"] + "Tarefas/" + id_tarefa, data = {'atri1': arg[2], 'atri2': arg[3]})
+elif arg[0] == "atualizar":
+    id_tarefa = arg[1]
+    r = requests.put(os.environ["ENDE"] + "Tarefas/" + id_tarefa, data = {'atri1': arg[2], 'atri2': arg[3]})
 
-    else:
-        print('comando inválido!')
-        print('Digite um dos seguintes comando:')
-        print('- adicionar: adiciona itens (necessita de no minimo dois argumentos chave e valor')
-        print('- listar: lista o dicionario inteiro')
-        print('- buscar: busca um item no dicionario (necessario passar o id)')
-        print('- apagar: apaga um item do dicionario (necessario passar o id)')
-        print('- atualizar: atualiza um item do dicionario (necessario passar o id, alem dos novos valores de chave e valor)')
-
-except:
-    print('Este programa necesita de argumentos!')
+else:
+    print('comando inválido!')
     print('Digite um dos seguintes comando:')
     print('- adicionar: adiciona itens (necessita de no minimo dois argumentos chave e valor')
     print('- listar: lista o dicionario inteiro')
