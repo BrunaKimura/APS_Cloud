@@ -49,6 +49,7 @@ while len(instacias) !=0:
                 'Name': 'tag:Owner',
                 'Values': [
                     'Banco',
+                    'Bruna'
                 ],
             },
             {
