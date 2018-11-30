@@ -92,8 +92,6 @@ ip_bruto = client.describe_instances(
         },
     ]
 )
-
-ip_db = os.environ['DB_HOST']
 instacias = ip_bruto['Reservations']
 if len(instacias) !=0:
     for i in instacias:
