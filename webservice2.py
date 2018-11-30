@@ -132,7 +132,7 @@ def cria_instancia(client, ec2, dif):
 
     idsg = str(describe['SecurityGroups'][0]['GroupId'])
 
-    ip_db = acha_ip_db
+    ip_db = acha_ip_db()
 
     instance = ec2.create_instances(
         ImageId='ami-0ac019f4fcb7cb7e6',
@@ -171,7 +171,8 @@ def checa_health(dicionario, client, ec2, qtd):
     while True:
         chaves = list(dicionario.keys())
         tamanho = len(chaves)
-
+        
+        print("quantidade: ", qtd)
         if tamanho>qtd:
             diff= tamanho-qtd
             while diff > 0:
@@ -203,7 +204,7 @@ def checa_health(dicionario, client, ec2, qtd):
                 else: 
                     print("tudo ok com a maquina:", id_i)
 
-            except as e:
+            except Exception as e:
                 print("tempo excedido")
                 print (e)
                 destroi_instancia(id_i,client, ec2)
