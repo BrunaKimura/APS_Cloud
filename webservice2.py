@@ -15,6 +15,44 @@ ec2 = boto3.resource('ec2')
 programa = sys.argv[0]
 qtd = int(sys.argv[1])
 
+def verifica_instancia_ligando():
+    instance_iterator = client.describe_instances(
+        Filters=[
+            {
+                'Name': 'tag:Owner',
+                'Values': [
+                    'Banco',
+                    'Bruna'
+                ],
+            },
+            {
+                'Name': 'instance-state-name',
+                    'Values':[
+                        'pending'
+                    ]
+            },
+        ]
+    )
+
+    while len(instacias) !=0:
+    instance_iterator = client.describe_instances(
+        Filters=[
+            {
+                'Name': 'tag:Owner',
+                'Values': [
+                    'Banco',
+                    'Bruna'
+                ],
+            },
+            {
+                'Name': 'instance-state-name',
+                    'Values':[
+                        'pending'
+                    ]
+            },
+        ]
+    )
+    instacias = instance_iterator['Reservations']
 
 def verifica_instancias():
     instance_iterator = client.describe_instances(
@@ -173,6 +211,7 @@ def checa_health(dicionario, client, ec2, qtd):
         tamanho = len(chaves)
         
         print("quantidade: ", qtd)
+        print("tamanho: ", tamanho)
         if tamanho>qtd:
             diff= tamanho-qtd
             while diff > 0:
@@ -217,6 +256,7 @@ def checa_health(dicionario, client, ec2, qtd):
 
 if __name__ == '__main__':
     dicionario = verifica_instancias()
+    verifica_instancia_ligando()
     t = threading.Thread(target=checa_health, args=(dicionario,client, ec2, qtd))
     t.start()
     app.run(debug=True, host='0.0.0.0')
