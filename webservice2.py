@@ -35,24 +35,24 @@ def verifica_instancia_ligando():
     )
 
     while len(instacias) !=0:
-    instance_iterator = client.describe_instances(
-        Filters=[
-            {
-                'Name': 'tag:Owner',
-                'Values': [
-                    'Banco',
-                    'Bruna'
-                ],
-            },
-            {
-                'Name': 'instance-state-name',
-                    'Values':[
-                        'pending'
-                    ]
-            },
-        ]
-    )
-    instacias = instance_iterator['Reservations']
+        instance_iterator = client.describe_instances(
+            Filters=[
+                {
+                    'Name': 'tag:Owner',
+                    'Values': [
+                        'Banco',
+                        'Bruna'
+                    ],
+                },
+                {
+                    'Name': 'instance-state-name',
+                        'Values':[
+                            'pending'
+                        ]
+                },
+            ]
+        )
+        instacias = instance_iterator['Reservations']
 
 def verifica_instancias():
     instance_iterator = client.describe_instances(
@@ -259,4 +259,4 @@ if __name__ == '__main__':
     verifica_instancia_ligando()
     t = threading.Thread(target=checa_health, args=(dicionario,client, ec2, qtd))
     t.start()
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0')
