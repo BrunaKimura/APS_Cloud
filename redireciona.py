@@ -26,11 +26,11 @@ app = Flask(__name__)
 # )
 
 ip_db = os.environ['DB_HOST']
-instacias = instance_iterator['Reservations']
-if len(instacias) !=0:
-    for i in instacias:
-        for e in i['Instances']:
-            ip_publico = str(e['PublicIpAddress'])
+# instacias = instance_iterator['Reservations']
+# if len(instacias) !=0:
+#     for i in instacias:
+#         for e in i['Instances']:
+#             ip_publico = str(e['PublicIpAddress'])
 
 @app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE'])
 @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
