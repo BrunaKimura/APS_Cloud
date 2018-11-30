@@ -214,6 +214,7 @@ def checa_health(dicionario, client, ec2, qtd):
 
 
 if __name__ == '__main__':
+    dicionario = verifica_instancias()
     t = threading.Thread(target=checa_health, args=(dicionario,client, ec2, qtd))
     t.start()
     app.run(debug=True, host='0.0.0.0')
