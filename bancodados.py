@@ -63,31 +63,34 @@ while len(instacias) !=0:
     instacias = instance_iterator['Reservations']
 
   
-nome = "APS2"
-describe = client.describe_security_groups(
-    Filters=[
-        {
-            'Name': 'group-name',
-            'Values': [
-                nome,
-            ]
-        },
-    ]
-)
+# nome = "APS2"
+# describe = client.describe_security_groups(
+#     Filters=[
+#         {
+#             'Name': 'group-name',
+#             'Values': [
+#                 nome,
+#             ]
+#         },
+#     ]
+# )
 
-idsg = str(describe['SecurityGroups'][0]['GroupId'])
+# idsg = str(describe['SecurityGroups'][0]['GroupId'])
+
+import keypair as kp
+import security as sg
 
 instance = ec2.create_instances(
     ImageId='ami-0ac019f4fcb7cb7e6',
     InstanceType='t2.micro',
-    KeyName='apsbru',
+    KeyName=kp.key_name,
     MaxCount=1,
     MinCount=1,
     SecurityGroupIds=[
-        idsg
+        sg.idsg
     ],
     SecurityGroups=[
-        nome
+        sg.nome
     ],
     UserData='''#!/bin/bash
                 cd /home/ubuntu
@@ -108,4 +111,4 @@ instance = ec2.create_instances(
     ]
 )
 
-print('Maquina criada com sucesso!')
+print('Banco de dados criados com sucesso!')

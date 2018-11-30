@@ -21,8 +21,7 @@ try:
 
     deleta = client.delete_security_group(
         GroupId= idsg,
-        GroupName = nome,
-        DryRun=False
+        GroupName = nome
 
     )
 
