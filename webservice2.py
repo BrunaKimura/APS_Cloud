@@ -52,6 +52,34 @@ def ip_aleatorio(dicionario):
     ip_ale = np.random.choice(ips)
     return ip_ale
 
+
+
+def acha_ip_db():
+    ip_bruto = client.describe_instances(
+        Filters=[
+            {
+                'Name': 'tag:Owner',
+                'Values': [
+                    'Banco'
+                ],
+            },
+            {
+                'Name': 'instance-state-name',
+                    'Values':[
+                        'running',
+                        'pending'
+                    ]
+            },
+        ]
+    )
+    instacias = ip_bruto['Reservations']
+    if len(instacias) !=0:
+        for i in instacias:
+            for e in i['Instances']:
+                ip_publico = str(e['PublicIpAddress'])
+
+    return ip_publico
+
 app = Flask(__name__)
 
 @app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -104,6 +132,8 @@ def cria_instancia(client, ec2, dif):
 
     idsg = str(describe['SecurityGroups'][0]['GroupId'])
 
+    ip_db = acha_ip_db
+
     instance = ec2.create_instances(
         ImageId='ami-0ac019f4fcb7cb7e6',
         InstanceType='t2.micro',
@@ -117,11 +147,12 @@ def cria_instancia(client, ec2, dif):
             "APS2"
         ],
         UserData='''#!/bin/bash
-                    cd /home/ubuntu
-                    git clone https://github.com/BrunaKimura/APS_Cloud.git
-                    cd APS_Cloud
-                    chmod a+x install.sh 
-                    ./install.sh''',
+                cd /home/ubuntu
+                git clone https://github.com/BrunaKimura/APS_Cloud.git
+                cd APS_Cloud
+                export DB_HOST={0}
+                chmod a+x install1.sh 
+                ./install1.sh'''.format(ip_db),
         TagSpecifications=[
             {
                 'ResourceType':'instance',
@@ -183,6 +214,6 @@ def checa_health(dicionario, client, ec2, qtd):
 
 
 if __name__ == '__main__':
-    t = threading.Thread(target=checa_health(dicionario,client, ec2, qtd))
+    t = threading.Thread(target=checa_health, args=(dicionario,client, ec2, qtd))
     t.start()
     app.run(debug=True, host='0.0.0.0')
