@@ -33,6 +33,7 @@ def verifica_instancia_ligando():
             },
         ]
     )
+    instacias = instance_iterator['Reservations']
 
     while len(instacias) !=0:
         instance_iterator = client.describe_instances(
