@@ -62,20 +62,6 @@ while len(instacias) !=0:
     )
     instacias = instance_iterator['Reservations']
 
-  
-# nome = "APS2"
-# describe = client.describe_security_groups(
-#     Filters=[
-#         {
-#             'Name': 'group-name',
-#             'Values': [
-#                 nome,
-#             ]
-#         },
-#     ]
-# )
-
-# idsg = str(describe['SecurityGroups'][0]['GroupId'])
 
 import keypair as kp
 import security as sg

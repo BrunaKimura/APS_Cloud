@@ -60,9 +60,6 @@ while len(instacias) !=0:
         ]
     )
     instacias = instance_iterator['Reservations']
-    
-# import keypair as kp
-# import security as sg
 
 nome = "APS2"
 describe = client.describe_security_groups(
@@ -78,7 +75,7 @@ describe = client.describe_security_groups(
 
 idsg = str(describe['SecurityGroups'][0]['GroupId'])
 
-ip_db = client.describe_instances(
+ip_bruto = client.describe_instances(
     Filters=[
         {
             'Name': 'tag:Owner',
@@ -95,6 +92,13 @@ ip_db = client.describe_instances(
         },
     ]
 )
+
+ip_db = os.environ['DB_HOST']
+instacias = ip_bruto['Reservations']
+if len(instacias) !=0:
+    for i in instacias:
+        for e in i['Instances']:
+            ip_publico = str(e['PublicIpAddress'])
 
 instance = ec2.create_instances(
     ImageId='ami-0ac019f4fcb7cb7e6',
@@ -114,7 +118,7 @@ instance = ec2.create_instances(
                 cd APS_Cloud
                 export DB_HOST={0}
                 chmod a+x install1.sh 
-                ./install1.sh'''.format(ip_db),
+                ./install1.sh'''.format(ip_publico),
     TagSpecifications=[
         {
             'ResourceType':'instance',
