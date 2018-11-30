@@ -1,29 +1,31 @@
 from flask import Flask, request
 import requests
-import boto3
+import os
+# import boto3
 
-client = boto3.client('ec2')
+# client = boto3.client('ec2')
 
 app = Flask(__name__)
 
-instance_iterator = client.describe_instances(
-    Filters=[
-        {
-            'Name': 'tag:Owner',
-            'Values': [
-                'Banco',
-            ],
-        },
-        {
-            'Name': 'instance-state-name',
-                'Values':[
-                    'running',
-                    'pending'
-                ]
-        },
-    ]
-)
+# instance_iterator = client.describe_instances(
+#     Filters=[
+#         {
+#             'Name': 'tag:Owner',
+#             'Values': [
+#                 'Banco',
+#             ],
+#         },
+#         {
+#             'Name': 'instance-state-name',
+#                 'Values':[
+#                     'running',
+#                     'pending'
+#                 ]
+#         },
+#     ]
+# )
 
+ip_db = os.environ['DB_HOST']
 instacias = instance_iterator['Reservations']
 if len(instacias) !=0:
     for i in instacias:
@@ -34,7 +36,7 @@ if len(instacias) !=0:
 @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def catch_all(path):
 
-    caminho = "http://" + ip_publico + ":5000/"
+    caminho = "http://" + ip_db + ":5000/"
 
     print(caminho)
 

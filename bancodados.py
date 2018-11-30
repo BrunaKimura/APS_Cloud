@@ -11,6 +11,7 @@ instance_iterator = client.describe_instances(
             'Name': 'tag:Owner',
             'Values': [
                 'Banco',
+                'Bruna'
             ],
         },
         {

@@ -10,8 +10,7 @@ instance_iterator = client.describe_instances(
         {
             'Name': 'tag:Owner',
             'Values': [
-                'Bruna',
-                'Banco'
+                'Bruna'
             ],
         },
         {
@@ -65,6 +64,24 @@ while len(instacias) !=0:
 import keypair as kp
 import security as sg
 
+ip_db = client.describe_instances(
+    Filters=[
+        {
+            'Name': 'tag:Owner',
+            'Values': [
+                'Banco'
+            ],
+        },
+        {
+            'Name': 'instance-state-name',
+                'Values':[
+                    'running',
+                    'pending'
+                ]
+        },
+    ]
+)
+
 instance = ec2.create_instances(
     ImageId='ami-0ac019f4fcb7cb7e6',
     InstanceType='t2.micro',
@@ -81,8 +98,9 @@ instance = ec2.create_instances(
                 cd /home/ubuntu
                 git clone https://github.com/BrunaKimura/APS_Cloud.git
                 cd APS_Cloud
+                export DB_HOST={0}
                 chmod a+x install1.sh 
-                ./install1.sh''',
+                ./install1.sh'''.format(ip_db),
     TagSpecifications=[
         {
             'ResourceType':'instance',
