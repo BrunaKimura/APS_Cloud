@@ -25,7 +25,7 @@ app = Flask(__name__)
 #     ]
 # )
 
-ip_db = os.environ['DB_HOST']
+
 # instacias = instance_iterator['Reservations']
 # if len(instacias) !=0:
 #     for i in instacias:
@@ -35,6 +35,8 @@ ip_db = os.environ['DB_HOST']
 @app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE'])
 @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def catch_all(path):
+
+    ip_db = os.environ['DB_HOST']
 
     caminho = "http://" + ip_db + ":5000/"
 
@@ -58,4 +60,4 @@ def catch_all(path):
         return r.text
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug = True, host='0.0.0.0')

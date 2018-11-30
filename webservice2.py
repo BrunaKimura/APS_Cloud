@@ -161,7 +161,7 @@ def checa_health(dicionario, client, ec2, qtd):
         for id_i in dicionario:
             caminho = "http://" + dicionario[id_i] + ":5000/healthcheck"
             try:
-                r = requests.get(caminho, timeout=5)
+                r = requests.get(caminho, timeout=30)
 
                 if r.status_code != 200:
                     print("erro na maquina!")
