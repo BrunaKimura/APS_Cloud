@@ -203,14 +203,15 @@ def checa_health(dicionario, client, ec2, qtd):
                 else: 
                     print("tudo ok com a maquina:", id_i)
 
-            except:
+            except as e:
                 print("tempo excedido")
+                print (e)
                 destroi_instancia(id_i,client, ec2)
                 cria_instancia(client, ec2, 1)
                 time.sleep(300)
                 dicionario = verifica_instancias()
 
-        time.sleep(5)
+        time.sleep(20)
 
 
 if __name__ == '__main__':
