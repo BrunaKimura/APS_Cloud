@@ -45,7 +45,7 @@ def verifica_instancias():
 
     return dicionario
 
-dicionario = verifica_instancias()
+
 
 def ip_aleatorio(dicionario):
     ips = [ip for ip in dicionario.values()]
@@ -85,7 +85,7 @@ app = Flask(__name__)
 @app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE'])
 @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def catch_all(path):
-
+    dicionario = verifica_instancias()
     maquina_ip = ip_aleatorio(dicionario)
 
     caminho = "http://"+maquina_ip + ":5000/"
